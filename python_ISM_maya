@@ -1,0 +1,38 @@
+# import maya commands
+import maya.cmds as cmds
+import csv
+
+# create list of selected parts
+selection = cmds.ls(sl = True)
+
+# store translation and rotation of parts in list
+col = ['', 'id', 'tx', 'ty', 'tz', 'rx', 'ry', 'rz', 'sx', 'sy', 'sz']
+
+# create file to store data
+with  open("C:\ISM_exporter\modelname_data.csv", 'w') as f:
+    writer = csv.writer(f)
+    writer.writerow(col)
+
+# get loop through each obj to get translate, rotate, scale
+    for idx, obj in enumerate(selection):
+        data = []
+        data.append(idx)
+        data.append(idx)
+
+        data.append(cmds.getAttr(obj + '.translateX'))
+        data.append(cmds.getAttr(obj + '.translateY'))
+        data.append(cmds.getAttr(obj + '.translateZ'))
+
+        data.append(cmds.getAttr(obj + '.rotateX'))
+        data.append(cmds.getAttr(obj + '.rotateY'))
+        data.append(cmds.getAttr(obj + '.rotateZ'))
+
+        data.append(cmds.getAttr(obj + '.scaleX'))
+        data.append(cmds.getAttr(obj + '.scaleY'))
+        data.append(cmds.getAttr(obj + '.scaleZ'))
+
+# write data to file
+        writer.writerow(data)
+
+# delete stored data
+        del data
